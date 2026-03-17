@@ -51,6 +51,7 @@ jobs:
 
           docker run -d \
           --name ${{ secrets.CONTAINER_NAME }} \
+          -v /opt/xui-bot/data:/data \
           --restart always \
           --env-file /opt/xui-bot/.env \
           ${{ secrets.DOCKER_USERNAME }}/3xui-parser:latest

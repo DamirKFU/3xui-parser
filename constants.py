@@ -1,1 +1,1 @@
-PAYMENT_FILE = "payment_day.txt"
+PAYMENT_FILE = "/data/payment_day.txt"
