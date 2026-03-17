@@ -4,15 +4,13 @@ import panel
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
-
-payment_day = int(os.getenv("PAYMENT_DAY"))
-
 scheduler = BackgroundScheduler()
 
 
 def auto_reset():
     today = datetime.date.today()
+    load_dotenv()
+    payment_day = int(os.getenv("PAYMENT_DAY"))
 
     if today.day == payment_day:
         panel.login()
