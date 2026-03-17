@@ -1,0 +1,1 @@
+PAYMENT_FILE = "payment_day.txt"

@@ -1,16 +1,15 @@
 from apscheduler.schedulers.background import BackgroundScheduler
 import datetime
 import panel
-import os
-from dotenv import load_dotenv
+
+from utils import get_payment_day
 
 scheduler = BackgroundScheduler()
 
 
 def auto_reset():
     today = datetime.date.today()
-    load_dotenv()
-    payment_day = int(os.getenv("PAYMENT_DAY"))
+    payment_day = get_payment_day()
 
     if today.day == payment_day:
         panel.login()

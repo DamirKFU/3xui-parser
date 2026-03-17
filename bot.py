@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
+from constants import PAYMENT_FILE
+
 load_dotenv()
 
 TOKEN = os.getenv("BOT_TOKEN")
@@ -66,15 +68,16 @@ async def setday(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     day = context.args[0]
 
-    with open(".env", "r") as f:
-        lines = f.readlines()
+    if not day.isdigit() or int(day) < 1 or int(day) > 31:
+        await update.message.reply_text("Please enter a valid day (1-31).")
+        return
 
-    with open(".env", "w") as f:
-        for line in lines:
-            if line.startswith("PAYMENT_DAY"):
-                f.write(f"PAYMENT_DAY={day}\n")
-            else:
-                f.write(line)
+    day = int(day)
+
+    with open(PAYMENT_FILE, "w") as f:
+        f.write(str(day))
+
+    os.environ["PAYMENT_DAY"] = str(day)
 
     await update.message.reply_text(f"Payment day set to {day}")
 
